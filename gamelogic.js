@@ -1,11 +1,11 @@
 var Entity = function(name, x_, y_)
 {
     var _component = Qt.createComponent("GRect.qml");
-    var _name ;
+    var _name;
     var _create = function()
     {
         var sprite = _component.createObject(gameCanvas, {"x":x_, "y":y_});
-        _name = ""+sprite;
+        _name = name;
     }
 
     var _destroy = function()
@@ -13,27 +13,20 @@ var Entity = function(name, x_, y_)
         delete _component;
     }
 
+    _create();
+
     return {
-        "create" : function() { _create(); },
-        "destroy" : function() { _destroy();},
         "getName" : function() { return _name; }
-    }
+    };
 }
-
-
-var entities = [];
-
-function getEntityByName(name_)
-{
-    console.log("Name is: " + name);
-}
-
 
 
 var GameObject = function(options)
 {
+    var entities = [];
 
-    this._init = function()
+
+    var _init = function()
     {
         return "init"; // init map and other objects
     }
@@ -43,28 +36,40 @@ var GameObject = function(options)
         return "deinit" // close and cleanup stuff here
     }
 
+    var _update = function()
+    {
+        for (var entity in entities)
+        {
+            console.log("Global tick test" + entity.getName());
+        }
+    }
+
+    var _addEnt = function(entity)
+    {
+        entities.push(entity);
+    }
+
     return {
-        "init" : this._init,
-        "deinit" : this._deinit,
+        "init" : function () { _init(); },
+        "deinit" : function() { _deinit(); },
+        "update" : function () { _update(); },
+        "addEntity" : function(ent) { _addEnt(ent); }
     };
 }
 
 
 // creates a single gameobject
-var go = new GameObject();
-
+var game = new GameObject();
+var gCounter = 0;
 
 function setArea(x_, y_)
 {
-    console.log(go.init());
+    console.log(game.init());
     console.log("click setArea(", x_, ", ", y_, ")");
     gameCanvas.color = "green";
 
-    var e = new Entity("test", x_, y_)
-
-    e.create();
-
-    console.log("Item is: " + e.getName());
-
-    entities[e.getName()] = e;
+    var e = new Entity("test" + gCounter, x_, y_)
+    gCounter += 1;
+    console.log("Item is: " + e);
+    game.addEntity(e);
 }

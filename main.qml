@@ -5,6 +5,15 @@ import "gamelogic.js" as Gamelogic
 
 Window
 {
+    Timer
+    {
+        id: globalTick;
+        interval: 1000;
+        running: true;
+        repeat:  true;
+        onTriggered: Gamelogic.game.update();
+    }
+
     id: screen;
     visible: true
     width: 780

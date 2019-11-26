@@ -12,7 +12,7 @@ Rectangle {
          anchors.fill:  parent;
 
          onClicked: {
-            Gamelogic.getEntityByName(name);
+             // todo!!!
          }
 
      }
