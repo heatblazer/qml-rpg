@@ -1,10 +1,11 @@
-var Entity = function(name, x_, y_)
+var Entity = function(name, x_, y_, color_)
 {
     var _component = Qt.createComponent("GRect.qml");
-    var _name;
+    var _name = "";
+
     var _create = function()
     {
-        var sprite = _component.createObject(gameCanvas, {"x":x_, "y":y_});
+        var sprite = _component.createObject(gameCanvas, {"color" : color_, "x":x_, "y":y_});
         _name = name;
     }
 
@@ -16,7 +17,7 @@ var Entity = function(name, x_, y_)
     _create();
 
     return {
-        "getName" : function() { return _name; }
+        "entityName" : function() { return _name; }
     };
 }
 
@@ -24,7 +25,6 @@ var Entity = function(name, x_, y_)
 var GameObject = function(options)
 {
     var entities = [];
-
 
     var _init = function()
     {
@@ -38,9 +38,9 @@ var GameObject = function(options)
 
     var _update = function()
     {
-        for (var entity in entities)
+        for (var i=0; i < entities.length; ++i)
         {
-            console.log("Global tick test" + entity.getName());
+            console.log("Global tick test[" + entities[i].entityName() + "]");
         }
     }
 
@@ -67,9 +67,6 @@ function setArea(x_, y_)
     console.log(game.init());
     console.log("click setArea(", x_, ", ", y_, ")");
     gameCanvas.color = "green";
-
-    var e = new Entity("test" + gCounter, x_, y_)
     gCounter += 1;
-    console.log("Item is: " + e);
-    game.addEntity(e);
+    game.addEntity(new Entity("test" + gCounter, x_, y_));
 }
