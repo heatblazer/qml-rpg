@@ -1,7 +1,30 @@
 var Entity = function(name, x_, y_, color_)
 {
+
+    var Stats = function() {
+        var hp = 0;
+        var str = 0;
+        var def = 0;
+        var spd = 0;
+        var dex = 0;
+        var lck = 0;
+
+        var _getStats = function()
+        {
+            var s =  "Stats: "  + hp + ":" + str + ":" + def + ":" + spd + ":" + dex + ":" + lck;
+            return s;
+        }
+        return {
+            "getStats" : function() { return _getStats(); }
+        }
+    };
+
+    var _stats = Stats();
+
     var _component = Qt.createComponent("GRect.qml");
+
     var _name = "";
+
 
     var _create = function()
     {
@@ -17,7 +40,8 @@ var Entity = function(name, x_, y_, color_)
     _create();
 
     return {
-        "entityName" : function() { return _name; }
+        "entityName" : function() { return _name; },
+        "getStats" : function() { return _stats.getStats(); }
     };
 }
 
@@ -40,7 +64,7 @@ var GameObject = function(options)
     {
         for (var i=0; i < entities.length; ++i)
         {
-            console.log("Global tick test[" + entities[i].entityName() + "]");
+            console.log("Global tick test[" + entities[i].entityName() + "]" + entities[i].getStats());
         }
     }
 
