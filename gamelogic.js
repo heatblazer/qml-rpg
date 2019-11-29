@@ -19,28 +19,20 @@ var Entity = function(name, x_, y_, color_)
         }
     };
 
-    var _stats = Stats();
+    var _stats = new Stats();
 
     var _component = Qt.createComponent("GRect.qml");
-
-    var _name = "";
-
-
-    var _create = function()
-    {
-        var sprite = _component.createObject(gameCanvas, {"color" : color_, "x":x_, "y":y_});
-        _name = name;
-    }
+    var _sprite = _component.createObject(gameCanvas, {"color" : color_, "x":x_, "y":y_});
+    var _name = ""+_sprite;
 
     var _destroy = function()
     {
+        delete _sprite;
         delete _component;
     }
 
-    _create();
-
     return {
-        "entityName" : function() { return _name; },
+        "getName" : function() { return _name; },
         "getStats" : function() { return _stats.getStats(); }
     };
 }
@@ -64,7 +56,7 @@ var GameObject = function(options)
     {
         for (var i=0; i < entities.length; ++i)
         {
-            console.log("Global tick test[" + entities[i].entityName() + "]" + entities[i].getStats());
+           // console.log("Global tick test[" + entities[i].entityName() + "]" + entities[i].getStats());
         }
     }
 
@@ -77,7 +69,12 @@ var GameObject = function(options)
         "init" : function () { _init(); },
         "deinit" : function() { _deinit(); },
         "update" : function () { _update(); },
-        "addEntity" : function(ent) { _addEnt(ent); }
+        "addEntity" : function(ent) { _addEnt(ent); },
+        "hClicked" : function(who) {
+            //todo update the logic needed per entitiy here
+                if (entities[who] !== null)
+                    console.log(who+ " clicked!");
+            }
     };
 }
 
