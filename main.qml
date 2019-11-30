@@ -33,6 +33,7 @@ Window
         width: parent.width;
         height: parent.height;
         color: "green";
+
         MouseArea{
             id: mouseAreaRoot;
             anchors.fill:  parent;
@@ -50,6 +51,26 @@ Window
         width: parent.width;
         height: parent.height;
         color: "blue";
+
+        Rectangle { id: enterName;
+            width: parent.width /5;
+            height: parent.height/10;
+            y: height;
+            color: "red";
+        }
+        Rectangle { id: enterRace;
+            width: parent.width /5;
+            height: parent.height/10;
+            y: height * 2 ;
+            color: "green";
+        }
+        Rectangle { id: enterClass;
+            width: parent.width /5;
+            height: parent.height/10;
+            y: height * 3 ;
+            color: "yellow";
+        }
+
         MouseArea{
             id: startMenuMA;
             anchors.fill:  parent;
