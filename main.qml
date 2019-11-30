@@ -1,5 +1,7 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
+import QtQuick.Controls 2.5;
+import QtQuick.Layouts 1.3;
 
 import "gamelogic.js" as Gamelogic
 
@@ -38,47 +40,46 @@ Window
             id: mouseAreaRoot;
             anchors.fill:  parent;
             onClicked:{
-                startMenu.visible=true;
-                gameCanvas.visible = false;
+                //startMenu.visible=true;
+                //gameCanvas.visible = false;
                 //todo!!! Gamelogic.setArea(mouseX, mouseY);
             }
         }
     }
 
-    Rectangle
+    Rectangle //character creation
     {
         id : startMenu;
         width: parent.width;
         height: parent.height;
-        color: "blue";
+        Frame{
+            x: startMenu.width / 6;
+            y:startMenu.height / 6;
 
-        Rectangle { id: enterName;
-            width: parent.width /5;
-            height: parent.height/10;
-            y: height;
-            color: "red";
-        }
-        Rectangle { id: enterRace;
-            width: parent.width /5;
-            height: parent.height/10;
-            y: height * 2 ;
-            color: "green";
-        }
-        Rectangle { id: enterClass;
-            width: parent.width /5;
-            height: parent.height/10;
-            y: height * 3 ;
-            color: "yellow";
-        }
-
-        MouseArea{
-            id: startMenuMA;
-            anchors.fill:  parent;
-            onClicked:{
-                startMenu.visible=false;
-                gameCanvas.visible = true;
-                //Gamelogic.setArea(mouseX, mouseY);
+            ColumnLayout{
+                TextEdit{
+                    text: "Enter name:";
+                }
+                ComboBox {
+                    model:["Human", "Dwarf", "Elf", "Troll", "Ogre"];
+                }
+                ComboBox {
+                    model:["Fighter", "Archer", "Thief", "Wizard", "Cleric"];
+                }
             }
         }
     }
+    //character creation
+
+    //TODO:
+        //MouseArea{
+        //    id: startMenuMA;
+        //    anchors.fill:  parent;
+        //    onClicked:{
+//                startMenu.visible=false;
+//                gameCanvas.visible = true;
+//                //Gamelogic.setArea(mouseX, mouseY);
+//            }
+//        }
+
 }
