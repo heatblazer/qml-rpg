@@ -6,7 +6,6 @@ Rectangle {
      width: 100; //parent.width;
      height: 150; //parent.height;
      color: "#ea1414"
-     radius: 4;
      border.color: "black";
 
      MouseArea {
