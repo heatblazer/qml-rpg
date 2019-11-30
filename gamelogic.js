@@ -8,6 +8,7 @@ var Entity = function(name, x_, y_, color_)
         var spd = 0;
         var dex = 0;
         var lck = 0;
+        var canAct = false;
 
         var _getStats = function()
         {
@@ -22,7 +23,7 @@ var Entity = function(name, x_, y_, color_)
     var _stats = new Stats();
 
     var _component = Qt.createComponent("GRect.qml");
-    var _sprite = _component.createObject(gameCanvas, {"color" : color_, "x":x_, "y":y_});
+    var _sprite = _component.createObject(gameCanvas, {"radius": 4, "color" : color_, "x":x_, "y":y_});
     var _name = ""+_sprite;
 
     var _destroy = function()
@@ -56,7 +57,7 @@ var GameObject = function(options)
     {
         for (var i=0; i < entities.length; ++i)
         {
-           // console.log("Global tick test[" + entities[i].entityName() + "]" + entities[i].getStats());
+            console.log("Global tick test[" + entities[i].getName() + "]" + entities[i].getStats());
         }
     }
 
@@ -81,13 +82,11 @@ var GameObject = function(options)
 
 // creates a single gameobject
 var game = new GameObject();
-var gCounter = 0;
 
 function setArea(x_, y_)
 {
     console.log(game.init());
-    console.log("click setArea(", x_, ", ", y_, ")");
     gameCanvas.color = "green";
-    gCounter += 1;
-    game.addEntity(new Entity("test" + gCounter, x_, y_));
+    game.addEntity(new Entity("test", x_, y_));
+
 }
